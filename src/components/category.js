@@ -13,6 +13,7 @@ class Category {
     }
 
     static renderIndex = () => {
-        console.log("Hello From Rendered Index")
+        const main = document.getElementById("app")
+        main.innerHTML = `<h3>Select a Category</h3>`
     }
 }
