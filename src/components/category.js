@@ -14,6 +14,12 @@ class Category {
         this.renderIndex()
     }
 
+    static handleClick(event){
+        event.preventDefault()
+
+        console.log(event.target.closest(".card"))
+    }
+    
     static renderIndex = () => {
         const main = document.getElementById("app")
         main.innerHTML = `<h3>Select a Category</h3>`
@@ -41,7 +47,7 @@ class Category {
         categoryContainer.append(row)
         console.log(this.all)
         main.append(categoryContainer)
-
+        categoryContainer.addEventListener("click", (event) => this.handleClick(event))
     }
 
 
