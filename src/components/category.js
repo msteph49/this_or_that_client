@@ -20,8 +20,13 @@ class Category {
         
         const categoryContainer = document.createElement("div")
         categoryContainer.id = "category-container"
+        const row = document.createElement("div")
+        row.classList.add("row")
+
         this.all.map((category) => {
-            categoryContainer.innerHTML += `
+            const col = document.createElement("div")
+            col.classList.add("col")
+            col.innerHTML += `
             <div class="card">
                 <img src="${category.data["image_url"]}" class="card-img-top" alt="...">
                 <div class="card-body">
@@ -29,7 +34,11 @@ class Category {
                     </div>
             </div>
             `
+
+            row.append(col)
+
         })
+        categoryContainer.append(row)
         console.log(this.all)
         main.append(categoryContainer)
 
