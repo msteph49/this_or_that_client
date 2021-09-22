@@ -17,8 +17,11 @@ class Category {
     static renderIndex = () => {
         const main = document.getElementById("app")
         main.innerHTML = `<h3>Select a Category</h3>`
+        
+        const categoryContainer = document.createElement("div")
+        categoryContainer.id = "category-container"
         this.all.map((category) => {
-            main.innerHTML += `
+            categoryContainer.innerHTML += `
             <div class="card">
                 <img src="${category.data["image_url"]}" class="card-img-top" alt="...">
                 <div class="card-body">
@@ -28,6 +31,7 @@ class Category {
             `
         })
         console.log(this.all)
+        main.append(categoryContainer)
 
     }
 
