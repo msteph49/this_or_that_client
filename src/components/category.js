@@ -9,7 +9,7 @@ class Category {
     }
 
     static getCategories = () => {
-        const categories = [{"title": "Metal or Rock n' Roll"}, {"title": "R&B"}]
+        const categories = [{"title": "Metal or Rock n' Roll","image_url": "https://picsum.photos/200/300"}, {"title": "R&B","image_url": "https://picsum.photos/200/300"}]
         categories.forEach((category) => {new Category(category)})
         this.renderIndex()
     }
@@ -19,13 +19,11 @@ class Category {
         main.innerHTML = `<h3>Select a Category</h3>`
         this.all.map((category) => {
             main.innerHTML += `
-            <div class="card" style="width: 18rem;">
-                <img src="..." class="card-img-top" alt="...">
+            <div class="card">
+                <img src="${category.data["image_url"]}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">${category.data["title"]}</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
+                    </div>
             </div>
             `
         })
