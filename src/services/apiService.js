@@ -13,5 +13,8 @@ class ApiService {
                 "Content-Type": "application/json"
             }
         }).then((response) => response.json())
+
     }
+
+    fetchVotes = (id) => fetch(`${this.api}/choices/${id}/votes`).then((response) => response.json())
 }
