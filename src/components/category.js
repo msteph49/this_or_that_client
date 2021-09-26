@@ -21,14 +21,16 @@ class Category {
         
     }
 
-    static find = (id) => this.all.find((category) => { category.data.id == id })
+    static find = (id) => this.all.find((category) => category.data["id"] == id)
 
 
     static handleClick(event){
         event.preventDefault()
 
         const id = event.target.closest(".card").dataset.id
-        console.log(this.find())
+        console.log(this.find(id))
+
+        this.find(id).renderShow()
     }
     static renderIndex = () => {
         const main = document.getElementById("app")
@@ -54,6 +56,9 @@ class Category {
             row.append(col)
 
         })
+
+
+        
         categoryContainer.append(row)
         console.log(this.all)
         main.append(categoryContainer)
@@ -62,5 +67,12 @@ class Category {
         categoryContainer.addEventListener("click", (event) => this.handleClick(event))
     }
 
+    renderShow() {
+        const main = document.getElementById("app")
 
+        main.innerHTML =   `<h3>${this.data.title}</h3>`
+        this.data["choices"].forEach((choice) => {
+            main.innerHTML += choice.title
+        })
+    }
 }
