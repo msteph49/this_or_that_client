@@ -26,6 +26,7 @@ class Category {
         e.target.reset()
 
         this.renderIndex() // react to changes
+
     }
 
     static getCategories = () => {

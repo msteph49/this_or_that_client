@@ -17,4 +17,15 @@ class ApiService {
     }
 
     fetchVotes = (id) => fetch(`${this.api}/choices/${id}/votes`).then((response) => response.json())
+
+    createCategory = (data) => {
+        return fetch(`${this.api}/categories`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+        .then(response => response.json())
+    }
 }
