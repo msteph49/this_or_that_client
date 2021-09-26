@@ -16,4 +16,11 @@ class Choice{
             `
 
     }
+
+    vote(category_id) {
+        api.makeVote(category_id, this.data.id).then(() => {
+            alert("You Voted!")
+        })
+    }
+
 }

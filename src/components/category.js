@@ -70,9 +70,15 @@ class Category {
     renderShow() {
         const main = document.getElementById("app")
 
+        const choicesContainer = document.createElement("div")
+        choicesContainer.id = "choices-container"
         main.innerHTML =   `<h3>${this.data.title}</h3>`
         this.data["choices"].forEach((choice) => {
-            main.innerHTML += choice.title
+            choicesContainer.innerHTML += new Choice(choice).render()
+        
         })
+        main.appendChild(choicesContainer)
     }
+
+
 }
