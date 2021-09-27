@@ -13,20 +13,33 @@ class Category {
         console.log(e.target)
         var newCategory = {
             title: e.target.title.value,
+            image_url: e.target.image_url.value,
             choices_attributes: [
-                {title: e.target["choices_attributes[0][title]"].value},
-                {title: e.target["choices_attributes[1][title]"].value}
+                { 
+                    title: e.target["choices_attributes[0][title]"].value,
+                    image_url: e.target["choices_attributes[0][image_url]"].value
+                },
+                {
+                    title: e.target["choices_attributes[1][title]"].value,
+                    image_url: e.target["choices_attributes[1][image_url]"].value
+                },
             ]
-        }
+        }   
 
-        api.createCategory({ category: newCategory }).then(category => {
-           this.all.push(new Category(category))
-        })
+       
+        api.createCategory({ category: newCategory }).then((json) => {
+            if (typeof json === "array"){
+                // error 
+                alert(json)
+                return
+            }
+            const category = new Category(json)
+ 
+            const categoriesContainer = document.getElementById("category-container")
+            categoriesContainer.firstChild.appendChild(category.renderCard())
+         })
 
-        e.target.reset()
-
-        this.renderIndex() // react to changes
-
+        
     }
 
     static getCategories = () => {
@@ -53,6 +66,22 @@ class Category {
 
         this.find(id).renderShow()
     }
+    renderCard() {
+        const col = document.createElement("div")
+        col.classList.add("col")
+        col.innerHTML += `
+            <div class="card" data-id="${this.data.id}">
+                <img src="${this.data.image_url}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">${this.data.title}</h5>
+                    <p> popularity: ${this.data.popularity}</p>
+                    </div>
+            </div> `
+            
+
+        return col
+    }
+
     static renderIndex = () => {
         const main = document.getElementById("app")
         main.innerHTML = `<h3>Select a Category</h3>`
@@ -62,26 +91,12 @@ class Category {
         const row = document.createElement("div")
         row.classList.add("row")
 
-        this.all.map((category) => {
-            const col = document.createElement("div")
-            col.classList.add("col")
-            col.innerHTML += `
-            <div class="card" data-id="${category.data["id"]}">
-                <img src="${category.data["image_url"]}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">${category.data["title"]}</h5>
-                    <p> popularity: ${category.data.popularity}</p>
-                    </div>
-            </div>
-            `
-
-            row.append(col)
-
-        })
-
+    
+        this.all.forEach((category) => { row.append(category.renderCard()) })
+        categoryContainer.append(row)
 
         
-        categoryContainer.append(row)
+        
         console.log(this.all)
         main.append(categoryContainer)
 
@@ -96,16 +111,23 @@ class Category {
             <form>
                 <label>Category:</label><br>
                 <input type="text" name="title"><br>
+                <label>Category Image:</label><br>
+                <input type="text" name="image_url"><br>
                 <label>Option 1:</label><br>
-                <input type="text" name="choices_attributes[0][title]"><br>
-                <label>Option 2:</label><br>
-                <input type="text" name="choices_attributes[1][title]"><br>
-                <input type="submit" value="Create Category"><br>
-            </form>`
-        
+        <input type="text" name="choices_attributes[0][title]"><br>
+        <label>Option 1 Image URL:</label><br>
+        <input type="text" name="choices_attributes[0][image_url]"><br>
+        <label>Option 2:</label><br>
+        <input type="text" name="choices_attributes[1][title]"><br>
+        <label>Option 2 Image URL:</label><br>
+        <input type="text" name="choices_attributes[1][image_url]"><br>
+        <input type="submit" value="Create Category"><br>
+    </form>`
 
-        form.querySelector("form").addEventListener("submit", this.handleSubmit)
+
+        form.querySelector("form").addEventListener("submit", (event) => this.handleSubmit(event) )
     }
+
     renderShow() {
         const main = document.getElementById("app")
 
