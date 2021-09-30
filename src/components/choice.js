@@ -22,6 +22,7 @@ class Choice{
         api.makeVote(category_id, this.data.id).then(() => {
             alert("You Voted!")
             
+            
         })
     }
 

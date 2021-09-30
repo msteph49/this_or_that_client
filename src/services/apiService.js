@@ -16,7 +16,7 @@ class ApiService {
 
     }
 
-    fetchVotes = (id) => fetch(`${this.api}/choices/${id}/votes`).then((response) => response.json())
+    // fetchVotes = (id) => fetch(`${this.api}/choices/${id}/votes`).then((response) => response.json())
 
     createCategory = (data) => {
         return fetch(`${this.api}/categories`, {
@@ -28,4 +28,14 @@ class ApiService {
         })
         .then(response => response.json())
     }
+
+    deleteCategory = (id) => {
+        return fetch(`${this.api}/categories/${id}`, {
+            method: "Delete",
+            headers: {
+                "Accepts": "application/json"
+            }
+        })
+    }
+
 }
